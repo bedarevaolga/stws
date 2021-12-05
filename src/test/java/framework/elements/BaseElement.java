@@ -26,7 +26,7 @@ public class BaseElement extends BaseEntity {
     protected String name;
     protected By locator;
     protected WebElement element;
-    protected List<WebElement> elements;
+    protected List<WebElement> list;
 
     public BaseElement() {
     }
@@ -138,32 +138,32 @@ public class BaseElement extends BaseEntity {
         clickElement(findElementByName(xpath, name));
         waitForPageToLoad();
     }
-
+    public void clickAndWait() {
+        waitForIsElementPresent();
+        clickElement(element);
+        waitForPageToLoad();
+    }
     public void clickAndWait(WebElement element) {
         clickElement(element);
         waitForPageToLoad();
     }
 
-    public void select(By locator, String value) {
-        Select select = new Select(findElement(locator));
+    public void select(String value) {
+        waitForIsElementPresent();
+        Select select = new Select(element);
         select.selectByVisibleText(value);
     }
 
-    public void sendKeysEsc() {
+    public void sendKeys(Keys key) {
        // waitForIsElementPresent();
         Actions action = new Actions(browser.getDriver());
-        action.sendKeys(Keys.ESCAPE).build().perform();
+        action.sendKeys(key).build().perform();
     }
 
     public void moveToElement(WebElement element) {
 
         Actions action = new Actions(browser.getDriver());
         action.moveToElement(element).build().perform();
-    }
-
-    public String getURLPage() {
-        System.out.println(browser.getDriver().getCurrentUrl());
-        return browser.getDriver().getCurrentUrl();
     }
 
 
@@ -183,8 +183,6 @@ public class BaseElement extends BaseEntity {
         }
     }
 
-
-
     public boolean isPresent() {
 
         WebDriverWait wait = new WebDriverWait(browser.getDriver(), getImplicitlyWait());
@@ -193,7 +191,8 @@ public class BaseElement extends BaseEntity {
             wait.until((ExpectedCondition<Boolean>) new ExpectedCondition<Boolean>() {
                 public Boolean apply(final WebDriver driver) {
                     try {
-                        List<WebElement> list = driver.findElements(locator);
+                        //List<WebElement>
+                                list = driver.findElements(locator);
                         for (WebElement el : list) {
                             if (el instanceof WebElement && el.isDisplayed()) {
                                 element =  el;
@@ -228,7 +227,7 @@ public class BaseElement extends BaseEntity {
     }
     public List<WebElement> getElements() {
         waitForIsElementPresent();
-        return elements;
+        return list;
     }
 
 

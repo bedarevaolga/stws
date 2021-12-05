@@ -13,5 +13,9 @@ public class Label extends BaseElement{
         super(locator);
     }
 
+    public Label(String strLocator,  String name) {
+
+        super(By.xpath(String.format(strLocator, name)));
+    }
 
 }

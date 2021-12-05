@@ -14,7 +14,7 @@ public class BaseSteamPage extends BaseEntity {
     protected Button btnLanguage = new Button(By.xpath("//span[@class='pulldown global_action_link']"));
   protected By spnLanguage = By.xpath("//span[@class='pulldown global_action_link']");//убрать
     protected By aLanguages = By.xpath("//a[@class=\"popup_menu_item tight\"]");//переделать
-    protected static final String A_BUTTON = "//a[contains(text(),'%s')]";
+    protected static final String BUTTON = "//a[contains(text(),'%s')]";
 
     protected BaseSteamPage(final By locator) {
         init(locator);

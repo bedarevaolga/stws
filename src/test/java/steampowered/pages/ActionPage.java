@@ -1,31 +1,37 @@
 package steampowered.pages;
 
 import framework.BaseSteamPage;
+import framework.elements.Label;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionPage extends BaseSteamPage {
 
     public ActionPage() {
-        super(By.xpath("//h2[contains(text(), 'Action')]"));
+        super(By.xpath("//div[@class='carousel_container quadscreenshot_carousel']"));
     }
 
     private final By divDiscount = By.xpath("//div[@class='capsule header']/following-sibling::div/descendant::div[@class=\"discount_pct\"]");
+    private  Label lblDiscount = new Label(By.xpath("//div[@class='capsule header']/following-sibling::div/descendant::div[@class=\"discount_pct\"]"));
     private static final String DIV_MAX_DISCOUNT = "//div[@class='capsule header']/following-sibling::div/descendant::div[@class=\"discount_pct\" and text()='%s']";
     private static String gameNameWithMaxDiscount = " ";
-    private static String gemeName = "//h4[@class='hover_title']";
+    private Label lblGameName = new Label(By.xpath("//h4[@class='hover_title']"));
 
     public int findMaxDiscounts() {
-        List<WebElement> discounts = baseElement.findElements(divDiscount);
+
+
+        List<WebElement> discounts = lblDiscount.getElements();
+
+
+        //List<WebElement> discounts = baseElement.findElements(divDiscount);
 
         int maxDiscount = parseDiscounts(discounts.get(0).getText());
 
         for (WebElement element : discounts) {
-            if (parseDiscounts(baseElement.getText(element)) > maxDiscount) {
+            if (parseDiscounts(element.getText()) > maxDiscount) {
                 maxDiscount = parseDiscounts(baseElement.getText(element));
             }
         }
@@ -38,12 +44,12 @@ public class ActionPage extends BaseSteamPage {
         List<WebElement> maxDiscountsList = baseElement.findElementsByName(DIV_MAX_DISCOUNT, nameDisc);
         if (maxDiscountsList.size() == 1) {
             baseElement.moveToElement(maxDiscountsList.get(0));
-            gameNameWithMaxDiscount = baseElement.getText(By.xpath(gemeName));
-            baseElement.clickAndWait(DIV_MAX_DISCOUNT, nameDisc);
+            gameNameWithMaxDiscount = lblGameName.getText();
+            baseElement.clickAndWait(DIV_MAX_DISCOUNT,nameDisc);
         } else {
             int random = (int) (Math.random() * (maxDiscountsList.size()));
             baseElement.moveToElement(maxDiscountsList.get(random));
-            gameNameWithMaxDiscount = baseElement.getText(By.xpath(gemeName));
+            gameNameWithMaxDiscount = lblGameName.getText();
             baseElement.clickAndWait(maxDiscountsList.get(random));
         }
     }

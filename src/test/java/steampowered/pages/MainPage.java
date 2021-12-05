@@ -1,7 +1,9 @@
 package steampowered.pages;
 
 import framework.BaseSteamPage;
+import framework.elements.Label;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -15,8 +17,8 @@ public class MainPage extends BaseSteamPage {
         super(By.xpath("//div[@class='home_page_gutter']"));
     }
 
-    private static  String aSection = "//a[@class= 'pulldown_desktop' and text()='%s']";
-    private static  String aSubSection = "//div[contains(@class, 'popup_menu_subheader popup_genre_expand_header')]/child::a[contains(text(), '%s')]";
+    private static final String SECTION = "//a[@class= 'pulldown_desktop' and text()='%s']";
+    private static final String SUBSECTION = "//div[contains(@class, 'popup_menu_subheader popup_genre_expand_header')]/child::a[contains(text(), '%s')]";
 
     public void changeLanguage(String language) {
       //  baseElement.clickElement(spnLanguage);
@@ -28,14 +30,12 @@ public class MainPage extends BaseSteamPage {
                 return;
             }
         }
-        baseElement.sendKeysEsc();
+        btnLanguage.sendKeys(Keys.ESCAPE);
     }
 
     public void navigateSection(String section, String subsection) {
-
-        baseElement.clickElement(baseElement.findElementByName(aSection, localLoader.getProperty(section)));
-       baseElement.clickElement(baseElement.findElementByName(aSubSection, localLoader.getProperty(subsection)));
-
+        new Label(SECTION, localLoader.getProperty(section)).clickElement();
+        new Label(SUBSECTION, localLoader.getProperty(subsection)).clickElement();
     }
 }
 

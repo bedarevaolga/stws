@@ -4,6 +4,7 @@ import framework.BaseSteamPage;
 import framework.Browser;
 import framework.ConfigLoader;
 import framework.Page;
+import framework.elements.Button;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,10 +20,10 @@ public class InstallPage extends BaseSteamPage {
         super(By.xpath("//div[@class='online_stats']"));
     }
 
-    private final By aInstallBtn = By.xpath("//a[@class='about_install_steam_link']");
+    private Button btnInstall = new Button(By.xpath("//a[@class='about_install_steam_link']"));
 
     public void installGame() {
-        baseElement.clickElement(aInstallBtn);
+        btnInstall.clickElement();
     }
 
     public boolean isDownloadsExists() {

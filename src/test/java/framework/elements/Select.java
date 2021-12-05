@@ -2,19 +2,20 @@ package framework.elements;
 
 import org.openqa.selenium.By;
 
-public class Button extends BaseElement{
+public class Select extends BaseElement{
 
-    public Button(final By locator, final String name) {
+    public Select(final By locator, final String name) {
         super(locator, name);
     }
 
 
-    public Button(By locator) {
+    public Select(By locator) {
         super(locator);
     }
 
-    public Button(String strLocator,  String name) {
+    public Select(String strLocator,  String name) {
 
         super(By.xpath(String.format(strLocator, name)));
     }
+
 }

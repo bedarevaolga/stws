@@ -47,7 +47,7 @@ public final class Browser {
         return driver;
     }
 
-    public static void teardown() {
+    public  void teardown() {
         try {
             instance = null;
             driver.quit();
